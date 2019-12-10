@@ -8,11 +8,12 @@ function Unlock() {
     }
 }
 
+// 清理後台app
 function ClearBackgroundApp() {
     recents();
     try {
         sleep(1000); // 不能用waitFor()，元件已經讀取到，但要等顯示動畫到位
-        id("clear_all").findOne(100).click();
+        idMatches(/.*clear_all.*/).findOne(100).click();
     } catch (error) {
         back();
     }
@@ -79,7 +80,8 @@ function AutoCheckIn() {
     click(checkInBtn.centerX(), checkInBtn.centerY());
 }
 
-function TelegramNotice(personName, fileName) {
+// 使用Telegrame傳送圖片給指定人員
+function TelegramNotice(personName, filePath) {
     app.launch("org.telegram.messenger"); // 開啟telegram
 
     className("android.widget.ImageView").depth(8).waitFor();
@@ -112,10 +114,10 @@ function TelegramNotice(personName, fileName) {
     clickPoint = text("Pictures").findOne().bounds();
     click(clickPoint.centerX(), clickPoint.centerY());
 
-    while (!text(fileName).findOne(100)) {
+    while (!text(filePath).findOne(100)) {
         swipe(device.width/2, device.height/4, device.width/2, 0, 300);
     }
-    clickPoint = text(fileName).findOne().bounds();
+    clickPoint = text(filePath).findOne().bounds();
     click(clickPoint.centerX(), clickPoint.centerY());
 
     home(); // 如果用ForceClose()會導致照片上傳也被停止

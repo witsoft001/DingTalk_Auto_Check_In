@@ -125,29 +125,44 @@ function TelegramNotice(personName, filePath) {
 
 auto();
 
-var bright = device.getBrightness();
-device.setBrightness(0); // 把螢幕亮度調成0，執行自動打卡時掩人耳目
-Unlock();
+while (true) {
+    var nowTime = new Date();
 
-var nowTime = new Date();
-// 等待隨機0~7分鐘後打卡
-randomTime =  Math.floor(Math.random()*420000);
-toastLog("本次隨機等待時間為" + randomTime/1000 + "秒");
-sleep(randomTime);
+    // 檢查現在是否是九點
+    if (nowTime.getHours() != 9) {
+        SleepTo9Oclock();
+        nowTime = new Date(); // 刷新時間
+    }
+    
+    if (nowTime.getDay() == 0 || nowTime.getDay() == 6) {
+        // 如果是六日就跳過這輪loop
+    } else {
+        // 等待隨機0~7分鐘後打卡
+        randomTime =  Math.floor(Math.random()*420000);
+        Unlock(); // 不知道為什麼呼叫長時間的sleep，螢幕一定要是亮的才有效
+        toastLog("本次隨機等待時間為" + randomTime/1000 + "秒");
+        sleep(randomTime);
+        
+        var bright = device.getBrightness();
+        device.setBrightness(0); // 把螢幕亮度調成0，執行自動打卡時掩人耳目
 
-ClearBackgroundApp();
-AutoCheckIn();
+        Unlock();
+        ClearBackgroundApp();
+        AutoCheckIn();
+    
+        //請求截圖
+        var Screenshot = "Check-in_" + nowTime.getFullYear() + '-' + 
+            (nowTime.getMonth()+1) + '-' + nowTime.getDate() + ".png";
+        if (requestScreenCapture()) {
+            captureScreen("/storage/emulated/0/Pictures/" + Screenshot); //截圖
+            toastLog ("截圖已完成");
+            sleep(1000);
+        }
+    
+        ForceClose("com.alibaba.android.rimet"); // 關閉釘釘
+        TelegramNotice("Bob Chen", Screenshot);
+        device.setBrightness(bright);
+    }
 
-//請求截圖
-var Screenshot = "Check-in_" + nowTime.getFullYear() + '-' + 
-    (nowTime.getMonth()+1) + '-' + nowTime.getDate() + ".png";
-if (requestScreenCapture()) {
-    captureScreen("/storage/emulated/0/Pictures/" + Screenshot); //截圖
-    toastLog ("截圖已完成");
-    sleep(1000);
+    sleep(3600000); // 休息一個小時，以等待9點過後
 }
-
-ForceClose("com.alibaba.android.rimet"); // 關閉釘釘
-TelegramNotice("Bob Chen", Screenshot);
-
-device.setBrightness(bright);

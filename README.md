@@ -4,7 +4,8 @@ Android mobile設備 使用 Auto.js 實現釘釘自動打卡
 ## 關於Auto.js
 不需要Root權限的JavaScript自動化軟體  
 詳細參照<a href="https://hyb1996.github.io/AutoJs-Docs/" target="_blank">官方網站</a>  
-官方apk載點已被下架，有需要的人請網上<a href="https://github.com/hyb1996/Auto.js/issues/500" target="_blank">自行搜尋</a>  
+<a href="https://github.com/hyb1996/Auto.js/issues/500#issuecomment-521103649" target="_blank">作者已下架官方apk載點</a>，有需要的人請網上自行搜尋  
+另外建議使用v4.1.1版(可開啟維持前台服務)  
 
 ## 使用情境
 將備用機(or 舊機)，接上充電線置於公司，執行腳本後放置play，每天自動打卡  
@@ -14,17 +15,16 @@ Android mobile設備 使用 Auto.js 實現釘釘自動打卡
 [注意] 將手機螢幕關閉自動的時間設定為7分鐘以上(詳細原因見<a href=#後記>後記</a>)  
 1.將 Chenk_in.js 存到手機裡  
 2.打開app點即右下角的＋，點擊導入  
-![image](/tutorial/001.png)  
-3.依照存放的路徑找到檔案，勾選腳本匯入  
-![image](/tutorial/002.png)  
+<img src="./tutorial/001.png" width = "30%" height = "30%" />
+<img src="./tutorial/002.png" width = "30%" height = "30%" />  
 4.回到主頁，點擊腳本右側的選項鈕，點選清單更多的選項  
-![image](/tutorial/003.png)  
 5.選擇建立定時任務  
-![image](/tutorial/004.png)  
+<img src="./tutorial/003.png" width = "30%" height = "30%" />
+<img src="./tutorial/004.png" width = "30%" height = "30%" />  
 6.依照需求設定執行時間  
-![image](/tutorial/005.png)  
 7.建立完成後，切換到管理頁籤可看到建立的定時任務  
-![image](/tutorial/006.png)  
+<img src="./tutorial/005.png" width = "30%" height = "30%" />
+<img src="./tutorial/006.png" width = "30%" height = "30%" />  
 
 ## 使用限制
 使用限制上就如官方文件所寫 需要Android 7.0或以上、需要無障礙功能 等等  

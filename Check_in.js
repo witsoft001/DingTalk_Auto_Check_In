@@ -1,4 +1,5 @@
-// 螢幕解鎖
+/** @description 螢幕滑動解鎖
+ */
 function Unlock() {
     if (!device.isScreenOn()) {
         device.wakeUp();
@@ -8,7 +9,8 @@ function Unlock() {
     }
 }
 
-// 清理後台app
+/** @description 點擊手機的清理後台app按鈕
+ */
 function ClearBackgroundApp() {
     recents();
     try {
@@ -20,7 +22,9 @@ function ClearBackgroundApp() {
     sleep(1000); // 等顯示動畫播完
 }
 
-// 強制關閉指定app
+/** @description 強制關閉指定app
+ * @param {string} packageName 要關閉的app的package名稱(可用其他app查詢)
+ */
 function ForceClose(packageName) {
     app.openAppSetting(packageName);
     text(app.getAppName(packageName)).waitFor();  
@@ -37,25 +41,22 @@ function ForceClose(packageName) {
     }
 }
 
-// 休息到下一次的9點
-function SleepTo9Oclock() {
-    let nowTime = new Date();
-    let nextTime = new Date(nowTime);
-
-    nextTime.setHours(09, 00, 00); // 直接設定HH:MM:SS
-    // 如果現在已經超過9點，目標是明天9點
-    if (nowTime.getHours() >= 9){
-        nextTime.setDate(nextTime.getDate() + 1); // 日期加1天
+/** @description 釘釘自動打卡
+ * @param {boolean} checkInMode 設定打卡的模式，
+ * true: 為上班打卡，false: 為下班打卡，預設為上班打卡
+ */
+function AutoCheckIn(checkInMode) {
+    // Auto.js 不支援 ES6 的預設傳入參數
+    if (typeof(checkInMode) == undefined){
+        checkInMode = true;
     }
-    let intervalTime = nextTime - nowTime;
-    toastLog("距離下一次9點還剩" + Math.floor(intervalTime / 3600000) + "時"
-        + Math.floor(intervalTime % 3600000 / 60000) + "分"
-            + intervalTime % 60000 / 1000 + "秒");
-    sleep(intervalTime); // sleep到下一個9點，Date相減所得已是是毫秒
-}
 
-// 釘釘自動打卡
-function AutoCheckIn() {
+    if (checkInMode) {
+        checkInText = "上班打卡";
+    } else {
+        checkInText = "下班打卡";
+    }
+    
     app.launch("com.alibaba.android.rimet"); // 開啟釘釘
 
     // 不知道為什麼app裡面一堆元件都是clickable都是false
@@ -75,13 +76,16 @@ function AutoCheckIn() {
         click(dattndBtn.centerX(), dattndBtn.centerY()-150);
     }
     sleep(3000);
-    text("上班打卡").waitFor(); // 有時候網路網路瞬斷會變外勤打卡，重複檢查已保險
-    let checkInBtn = text("上班打卡").findOne().bounds();
+    text(checkInText).waitFor(); // 有時候網路網路瞬斷會變外勤打卡，重複檢查已保險
+    let checkInBtn = text(checkInText).findOne().bounds();
     click(checkInBtn.centerX(), checkInBtn.centerY());
 }
 
-// 使用Telegrame傳送圖片給指定人員
-function TelegramNotice(personName, filePath) {
+/** @description 使用Telegrame傳送圖片給指定的人
+ * @param {string} personName 要傳給的人的名字(需先加入聯絡人清單)
+ * @param {string} fileName 圖片的檔名
+ */
+function TelegramNotice(personName, fileName) {
     app.launch("org.telegram.messenger"); // 開啟telegram
 
     className("android.widget.ImageView").depth(8).waitFor();
@@ -114,10 +118,10 @@ function TelegramNotice(personName, filePath) {
     clickPoint = text("Pictures").findOne().bounds();
     click(clickPoint.centerX(), clickPoint.centerY());
 
-    while (!text(filePath).findOne(100)) {
+    while (!text(fileName).findOne(100)) {
         swipe(device.width/2, device.height/4, device.width/2, 0, 300);
     }
-    clickPoint = text(filePath).findOne().bounds();
+    clickPoint = text(fileName).findOne().bounds();
     click(clickPoint.centerX(), clickPoint.centerY());
 
     home(); // 如果用ForceClose()會導致照片上傳也被停止
@@ -130,13 +134,13 @@ device.setBrightness(0); // 把螢幕亮度調成0，執行自動打卡時掩人
 Unlock();
 
 var nowTime = new Date();
-// 等待隨機0~7分鐘後打卡
-randomTime =  Math.floor(Math.random()*420000);
+// 等待隨機0~5分鐘後打卡
+randomTime =  Math.floor(Math.random()*300000);
 toastLog("本次隨機等待時間為" + randomTime/1000 + "秒");
 sleep(randomTime);
 
 ClearBackgroundApp();
-AutoCheckIn();
+AutoCheckIn(true);
 
 //請求截圖
 var Screenshot = "Check-in_" + nowTime.getFullYear() + '-' + 

@@ -15,16 +15,17 @@ Android mobile設備 使用 Auto.js 實現釘釘自動打卡
 [注意] 將手機螢幕關閉自動的時間設定為7分鐘以上(詳細原因見<a href=#後記>後記</a>)  
 1.將 Chenk_in.js 存到手機裡  
 2.打開app點即右下角的＋，點擊導入  
-<img src="./tutorial/001.png" width = "30%" height = "30%" />
-<img src="./tutorial/002.png" width = "30%" height = "30%" />  
+3.依照存放的路徑找到檔案，勾選腳本匯入  
+<img src="./tutorial/001.png" width = "40%" height = "40%" />
+<img src="./tutorial/002.png" width = "40%" height = "40%" />  
 4.回到主頁，點擊腳本右側的選項鈕，點選清單更多的選項  
 5.選擇建立定時任務  
-<img src="./tutorial/003.png" width = "30%" height = "30%" />
-<img src="./tutorial/004.png" width = "30%" height = "30%" />  
+<img src="./tutorial/003.png" width = "40%" height = "40%" />
+<img src="./tutorial/004.png" width = "40%" height = "40%" />  
 6.依照需求設定執行時間  
 7.建立完成後，切換到管理頁籤可看到建立的定時任務  
-<img src="./tutorial/005.png" width = "30%" height = "30%" />
-<img src="./tutorial/006.png" width = "30%" height = "30%" />  
+<img src="./tutorial/005.png" width = "40%" height = "40%" />
+<img src="./tutorial/006.png" width = "40%" height = "40%" />  
 
 ## 使用限制
 使用限制上就如官方文件所寫 需要Android 7.0或以上、需要無障礙功能 等等  
@@ -48,5 +49,6 @@ Android mobile設備 使用 Auto.js 實現釘釘自動打卡
 但後來發現不知道是Auto.js 有bug，還是手機的控制系統本身就有限制，  
 如果執行sleep期間 如果手機螢幕關閉，在時間計算上會慢非常多  
 官方討論版也有人討論<a href="https://www.autojs.org/topic/197/%E4%BD%BF%E7%94%A8sleep-%E5%9C%A8%E9%94%81%E5%B1%8F%E4%B9%8B%E5%90%8E-%E4%B8%8D%E5%87%86" target="_blank">此問題</a>  
+不過我測試是就算螢幕不關，執行5分鐘以上的sleep，手機有時候也會不醒人事...Orz  
 後來才發現Auto.js 本身就有提供定時執行，改用Auto.js 的定時執行就OK了，  
-目前在abandoned資料夾內的腳本就是摒棄的版本  
+目前在abandoned資料夾內的腳本就是摒棄的版本

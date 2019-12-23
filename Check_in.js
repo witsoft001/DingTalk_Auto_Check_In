@@ -3,7 +3,7 @@
 function Unlock() {
     if (!device.isScreenOn()) {
         device.wakeUp();
-        sleep(500);
+        sleep(1000);
         swipe(device.width/2, device.height*3/4, device.width/2, device.height/4, 300);
         sleep(500);
     }
@@ -139,6 +139,7 @@ randomTime =  Math.floor(Math.random()*300000);
 toastLog("本次隨機等待時間為" + randomTime/1000 + "秒");
 sleep(randomTime);
 
+Unlock();
 ClearBackgroundApp();
 AutoCheckIn(true);
 

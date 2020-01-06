@@ -1,10 +1,10 @@
 /** @description 螢幕滑動解鎖
  */
 function Unlock() {
-    if (!device.isScreenOn()) {
+    while (!device.isScreenOn()) {
         device.wakeUp();
         sleep(1000);
-        swipe(device.width/2, device.height*3/4, device.width/2, device.height/4, 300);
+        swipe(device.width/2, device.height*7/8, device.width/2, device.height/4, 300);
         sleep(500);
     }
 }
